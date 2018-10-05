@@ -1,7 +1,7 @@
 import java.util.*;
 
 public abstract class SpeciesDecorator implements Species {
-    public Map<Bonus, Boolean> attributes;
+    protected Map<Bonus, Boolean> attributes;
     protected Species species;
 
     public SpeciesDecorator(Species species) {

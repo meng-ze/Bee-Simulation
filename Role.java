@@ -1,4 +1,4 @@
-public abstract class Role {
+public class Role {
     private RoleEnum role;
     RoleEnum getRole() {
         return role;

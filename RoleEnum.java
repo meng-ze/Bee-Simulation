@@ -1,5 +1,6 @@
 public enum RoleEnum {
     WORKER,
     WARRIOR,
-    KILLER;
+    KILLER,
+    QUEEN;
 }
