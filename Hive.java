@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Hive implements Space {
-    private Map<RoleEnum, ArrayList<Bee>> bees;
-    private Beehive ownerBeehive;
+    public Map<RoleEnum, ArrayList<Bee>> bees;
+    private Beehive beehive;
     private int maxResidentNumber;
+    public int remainingBuildingTime;
 
     @Override
     public void setMaxResidentLimit(int value) {
@@ -30,11 +31,11 @@ public class Hive implements Space {
     }
 
     public void spawnBee(RoleEnum role) {
-        this.bees.get(role).add(new Bee(this.ownerBeehive, role));
+        this.bees.get(role).add(new Bee(this.beehive, role));
     }
 
     public Hive(Beehive owner, int maxResidentNumber) {
-        this.ownerBeehive = owner;
+        this.beehive = owner;
         this.maxResidentNumber = maxResidentNumber;
         this.bees = new HashMap<RoleEnum, ArrayList<Bee>>();
         this.bees.put(RoleEnum.WORKER, new ArrayList<Bee>());
@@ -44,7 +45,7 @@ public class Hive implements Space {
     }
 
     public Hive(Beehive owner) {
-        this.ownerBeehive = owner;
+        this.beehive = owner;
         this.maxResidentNumber = 20;
         this.bees = new HashMap<RoleEnum, ArrayList<Bee>>();
         this.bees.put(RoleEnum.WORKER, new ArrayList<Bee>());

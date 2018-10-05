@@ -7,4 +7,9 @@ public class Bee_Hornet extends Bee {
         super(beehive, role);
         this.setAttribute(Bonus.EXTRA_FORCE, 50);
     }
+
+    @Override
+    public Bee spawnNewBee() {
+        return new Bee_Hornet(super.spawnNewBee());
+    }
 }

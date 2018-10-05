@@ -46,6 +46,7 @@ public class Apiary {
     public List<Bee> getAllBees() {
         ArrayList<Bee> returningBee = new ArrayList<Bee>();
         for (Beehive beehive: this.beehives) {
+            returningBee.add(beehive.queen);
             List<Bee> tmpBeeList = beehive.getAllBees();
             for (Bee bee: tmpBeeList) {
                 returningBee.add(bee);
@@ -55,10 +56,16 @@ public class Apiary {
         return returningBee;
     }
 
+    private void addNewBeeHiveFromSpecies(int posX, int posY, Species species) {
+        Beehive newBeehive = new Beehive(posX, posY, species);
+        this.beehives.add(newBeehive);
+        newBeehive.spawnHive(0);
+    }
+
     private void addNewBeeHiveFromSpecies(Species species) {
         Beehive newBeehive = new Beehive(species);
         this.beehives.add(newBeehive);
-        newBeehive.spawnHive();
+        newBeehive.spawnHive(0);
     }
 
 }

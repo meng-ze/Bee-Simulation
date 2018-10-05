@@ -1,3 +1,4 @@
 public interface Species {
-    public void performAction();    
+    public int posX = 1;
+    public int posY = 1;
 }

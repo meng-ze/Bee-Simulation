@@ -5,40 +5,43 @@ import java.util.HashMap;
 import java.util.Random;
 
  public class Beehive<T> {
-    private T species;
-    private List<Hive> hives;
-    private Bee queen;
+    public T species;
+    public ArrayList<Hive> hives;
+    public Hive stillBuildingHive;
+    public Bee queen;
 
-    private float posX;
-    private float posY;
+    public int posX;
+    public int posY;
 
     public Beehive(T species) {
         this.species = species;
         this.hives = new ArrayList<Hive>();
+        this.spawnQueen();
     }
-
-    public Beehive(float posX, float posY, T species) {
+    public Beehive(int posX, int posY, T species) {
         this.posX = posX;
         this.posY = posY;
         this.species = species;
         this.hives = new ArrayList<Hive>();
+        this.spawnQueen();
     }
+
     public void spawnQueen() {
         this.queen = new Bee(this, RoleEnum.QUEEN);
+        this.queen.posX = this.posX;
+        this.queen.posY = this.posY;
     }
 
-    public float getPositionX() {
-        return this.posX;
-    }
-    public float getPositionY() {
-        return this.posY;
-    }
-
-    public void spawnHive() {
+    public void spawnHive(int remainingTime) {
         Hive newHive = new Hive(this);
+        if (remainingTime != 0) {
+            this.stillBuildingHive = newHive;
+            newHive.remainingBuildingTime = remainingTime;    
+        }
         this.hives.add(newHive);
     }
-    public List<Bee> getAllBees() {
+
+    public ArrayList<Bee> getAllBees() {
         ArrayList<Bee> totalBeesInBeehive = new ArrayList<Bee>();
         for (Hive hive: this.hives) {
             ArrayList<Bee> bees = hive.getAllBees();
@@ -59,9 +62,21 @@ import java.util.Random;
         }
         return 0;
     }
+    public int getMaxResidentNumber() {
+        int tmpSum = 0;
+        for (Hive hive: this.hives) {
+            tmpSum += hive.getMaxResidentLimit();
+        }
+        return tmpSum;
+    }
 
-    public T getSpecies() {
-        return this.species;
+    public Beehive_Status getStatus() {
+        Beehive_Status status = new Beehive_Status(this);
+        return status;
+    }
+
+    public void removeBee(Bee bee) {
+
     }
 
     public void summary() {

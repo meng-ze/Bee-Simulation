@@ -7,4 +7,9 @@ public class Bee_Honey extends Bee {
         super(beehive, role);
         this.setAttribute(Bonus.LONG_TIME_WORKING, 90);
     } 
+
+    @Override
+    public Bee spawnNewBee() {
+        return new Bee_Honey(super.spawnNewBee());
+    }
 }
