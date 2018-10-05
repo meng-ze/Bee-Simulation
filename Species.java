@@ -1,3 +1,3 @@
 public interface Species {
-    void addAttribute(Bonus bonus, Boolean value);
+    public void performAction();    
 }

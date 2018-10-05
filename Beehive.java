@@ -14,7 +14,6 @@ import java.util.Random;
 
     public Beehive(T species) {
         this.species = species;
-        this.queen = new Bee(this, RoleEnum.QUEEN);
         this.hives = new ArrayList<Hive>();
     }
 
@@ -22,13 +21,32 @@ import java.util.Random;
         this.posX = posX;
         this.posY = posY;
         this.species = species;
-        this.queen = new Bee(this, RoleEnum.QUEEN);
         this.hives = new ArrayList<Hive>();
+    }
+    public void spawnQueen() {
+        this.queen = new Bee(this, RoleEnum.QUEEN);
+    }
+
+    public float getPositionX() {
+        return this.posX;
+    }
+    public float getPositionY() {
+        return this.posY;
     }
 
     public void spawnHive() {
         Hive newHive = new Hive(this);
         this.hives.add(newHive);
+    }
+    public List<Bee> getAllBees() {
+        ArrayList<Bee> totalBeesInBeehive = new ArrayList<Bee>();
+        for (Hive hive: this.hives) {
+            ArrayList<Bee> bees = hive.getAllBees();
+            for (Bee bee: bees) {
+                totalBeesInBeehive.add(bee);
+            }
+        }
+        return totalBeesInBeehive;
     }
 
     public int getBeesCount() {
@@ -56,55 +74,3 @@ import java.util.Random;
     }
 }
 
-class Hive {
-    private Map<RoleEnum, ArrayList<Bee>> bees;
-    private Beehive ownerBeehive;
-
-    public void spawnBee(RoleEnum role) {
-        this.bees.get(role).add(new Bee(this.ownerBeehive, role));
-    }
-
-    public Hive(Beehive owner) {
-        this.ownerBeehive = owner;
-        this.bees = new HashMap<RoleEnum, ArrayList<Bee>>();
-        this.bees.put(RoleEnum.WORKER, new ArrayList<Bee>());
-        this.bees.put(RoleEnum.WARRIOR, new ArrayList<Bee>());
-        this.bees.put(RoleEnum.KILLER, new ArrayList<Bee>());
-        this.randomSpawnBee(10);
-    }
-
-    public void randomSpawnBee(int number) {
-        for (int i=0; i<number; ++i) {
-            Random random = new Random();
-            RoleEnum role = RoleEnum.values()[random.nextInt(3)];
-            this.spawnBee(role);
-        }
-    }
-
-    public void summaryHive() {
-        for (RoleEnum iter: this.bees.keySet()) {
-            if (iter != RoleEnum.QUEEN) {
-                System.out.printf("---------- [%d]: %d\n", iter.ordinal(), this.bees.get(iter).size());
-            }
-        }
-    }
-
-    public int getBeesCount() {
-        int tmp_sum = 0;
-        for (RoleEnum iter: this.bees.keySet()) {
-            tmp_sum += this.bees.get(iter).size();
-        }
-        return tmp_sum;
-    }
-}
-
-class Room {
-    public int maxResident = 20;
-}
-
-class Bee {
-    Object species;
-    public Bee(Beehive beehive, RoleEnum role) {
-        this.species = beehive.getSpecies();
-    }
-}
