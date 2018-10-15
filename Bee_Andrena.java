@@ -1,3 +1,6 @@
+/*
+ * Decorator Pattern part:
+ */
 public class Bee_Andrena extends Bee {
     public Bee_Andrena(Bee bee) {
         bee.setAttribute(Bonus.LONG_TIME_WORKING, 90);
@@ -9,4 +12,9 @@ public class Bee_Andrena extends Bee {
         this.setAttribute(Bonus.LONG_TIME_WORKING, 90);
         this.setAttribute(Bonus.FASTER_FLYING, 4);
     } 
+
+    @Override
+    public Bee spawnNewBee() {
+        return new Bee_Andrena(super.spawnNewBee());
+    }
 }

@@ -1,3 +1,11 @@
+/*
+ * Templated pattern part:
+ * 
+ * Beehive is implemented using templated constructor (generic method in Java term)
+ * Bee must have their own Beehive but for the reason that different species of Bee is actually different in type.
+ * And therefore I used templated pattern in this class to separate the type of each species's beehive
+ * 
+ */
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -34,11 +42,14 @@ import java.util.Random;
 
     public void spawnHive(int remainingTime) {
         Hive newHive = new Hive(this);
+        this.hives.add(newHive);
+
         if (remainingTime != 0) {
             this.stillBuildingHive = newHive;
             newHive.remainingBuildingTime = remainingTime;    
+        } else {
+            this.queen.spawnNewBees(10);
         }
-        this.hives.add(newHive);
     }
 
     public ArrayList<Bee> getAllBees() {
@@ -73,10 +84,6 @@ import java.util.Random;
     public Beehive_Status getStatus() {
         Beehive_Status status = new Beehive_Status(this);
         return status;
-    }
-
-    public void removeBee(Bee bee) {
-
     }
 
     public void summary() {

@@ -1,3 +1,6 @@
+/*
+ * Decorator Pattern part:
+ */
 public class Bee_Hornet extends Bee {
     public Bee_Hornet(Bee bee) {
         bee.setAttribute(Bonus.EXTRA_FORCE, 50);

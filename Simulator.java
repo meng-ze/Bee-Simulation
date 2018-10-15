@@ -5,18 +5,32 @@ public class Simulator {
         List<Bee> allBees = Apiary.getInstance().getAllBees();
         for (Bee bee: allBees) {
             maintainBeeBehavior(bee);
+            bee.summary();
         }
     }
+
+    /*
+     * Mediator Pattern part:
+     * 
+     * As the requirement state, I use a tick based simulation to perform this program.
+     * This Simulator class will mediate the behavior among all bees.
+     * In every tick, this program will check "EVERY" bee's behavior/status and check whether they conform the rule.
+     * The rule checking part is written in the function: maintainBeeBehavior
+     * After each checking, every bee will have a slightly different attribute than previous tick.
+     * The tick function does not directly implement in Bee's class, rather, they are implemented in this class.
+     */
 
     private static void maintainBeeBehavior(Bee bee) {
         /*
         * Haven't implement location system yet
         */
+        if (bee == null) {
+            return;
+        }
         if (bee.role == RoleEnum.QUEEN) {
             if (bee.home.getMaxResidentNumber() > bee.home.getBeesCount()) {
                 if (bee.statusValue == 0) {
-                    Bee newBee = bee.spawnNewBee();
-                    bee.allocateHiveForBee(newBee);
+                    bee.spawnNewBees(1);
                 }
             }
         } else {
@@ -30,7 +44,7 @@ public class Simulator {
             }
 
             if (bee.status == Status.FLYING && bee.statusValue == 0) {
-                bee.flyingHome();
+                bee.flyToBeehive(bee.home);
                 return;
             }
 
@@ -49,14 +63,17 @@ public class Simulator {
                 break;
             case KILLER:
                 break;
+
+            default:
+                break;
             }
         } 
     }
     public static void main(String [] argc) {
         Apiary apiary = Apiary.getInstance();
-        apiary.spawnBeehive(new Bee_Honey(new Bee()));
-        apiary.spawnBeehive(new Bee_Hornet(new Bee()));
-        apiary.spawnBeehive(new Bee_Andrena(new Bee()));
+        apiary.addNewBeehiveForSpecies(new Bee_Honey(new Bee()), 0, 0);
+        apiary.addNewBeehiveForSpecies(new Bee_Hornet(new Bee()), 20, 50);
+        apiary.addNewBeehiveForSpecies(new Bee_Andrena(new Bee()), 100, 20);
         apiary.summary();
 
         Simulator.simulateOneTick();

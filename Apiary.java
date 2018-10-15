@@ -2,6 +2,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 /*
+ * Singleton Pattern part:
+ * 
  * Apiary is designed using 'Singleton pattern'.
  * For the reason of 'private constructor', users could never 
  * call the constructor this class's constructor themselves
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 
 public class Apiary {
     private static final Apiary instance = new Apiary();
-    private List<Beehive> beehives;
+    public ArrayList<Beehive> beehives;
 
     private Apiary() {
         this.beehives = new ArrayList<Beehive>();
@@ -26,10 +28,6 @@ public class Apiary {
 
     public static Apiary getInstance() {
         return instance;
-    }
-
-    public void spawnBeehive(Species species) {
-        this.addNewBeeHiveFromSpecies(species);
     }
 
     public void summary() {
@@ -56,13 +54,13 @@ public class Apiary {
         return returningBee;
     }
 
-    private void addNewBeeHiveFromSpecies(int posX, int posY, Species species) {
+    public void addNewBeehiveForSpecies(Species species, int posX, int posY) {
         Beehive newBeehive = new Beehive(posX, posY, species);
         this.beehives.add(newBeehive);
         newBeehive.spawnHive(0);
     }
 
-    private void addNewBeeHiveFromSpecies(Species species) {
+    public void addNewBeehiveForSpecies(Species species) {
         Beehive newBeehive = new Beehive(species);
         this.beehives.add(newBeehive);
         newBeehive.spawnHive(0);

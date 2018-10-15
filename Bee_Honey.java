@@ -1,3 +1,6 @@
+/*
+ * Decorator Pattern part:
+ */
 public class Bee_Honey extends Bee {
     public Bee_Honey(Bee bee) {
         bee.setAttribute(Bonus.LONG_TIME_WORKING, 90);

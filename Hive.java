@@ -17,7 +17,7 @@ public class Hive implements Space {
 
     @Override
     public int getMaxResidentLimit() {
-        return 0;
+        return this.maxResidentNumber;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Hive implements Space {
         this.bees.put(RoleEnum.WORKER, new ArrayList<Bee>());
         this.bees.put(RoleEnum.WARRIOR, new ArrayList<Bee>());
         this.bees.put(RoleEnum.KILLER, new ArrayList<Bee>());
-        this.randomSpawnBee(10);
+        this.beehive.queen.spawnNewBees(10);
     }
 
     public Hive(Beehive owner) {
@@ -51,7 +51,7 @@ public class Hive implements Space {
         this.bees.put(RoleEnum.WORKER, new ArrayList<Bee>());
         this.bees.put(RoleEnum.WARRIOR, new ArrayList<Bee>());
         this.bees.put(RoleEnum.KILLER, new ArrayList<Bee>());
-        this.randomSpawnBee(10);
+        this.beehive.queen.spawnNewBees(10);
     }
 
     public ArrayList<Bee> getAllBees() {
@@ -63,14 +63,6 @@ public class Hive implements Space {
             }
         }
         return bees;
-    }
-
-    public void randomSpawnBee(int number) {
-        for (int i=0; i<number; ++i) {
-            Random random = new Random();
-            RoleEnum role = RoleEnum.values()[random.nextInt(3)];
-            this.spawnBee(role);
-        }
     }
 
     public void summaryHive() {
